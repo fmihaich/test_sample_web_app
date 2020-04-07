@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block page_title %}All Users{% endblock %}
+{% block body %}
+    {{ super() }}
+
+    {# Only invoked when users can not be loaded #}
+    {% if load_users_error %}
+    <div class="alert alert-dismissible alert-danger">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Warning!</strong> Error getting all stored users. Probably the server is down.
+    </div>
+    {% endif %}
+
+    <div class = "container">
+      <div class="row">
+
+        <div class="col-lg-6" style="width: 100%">
+          <h3>Existing Users</h3>
+
+            <table class="table small">
+            <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Name</th>
+                  <th>Surname</th>
+                  <th>Email</th>
+                  <th>Birthday</th>
+                  <th>Address</th>
+                </tr>
+            </thead>
+            {% for username, name, surname, email, birthday, address in users %}
+                <tr>
+                   <td>{{username}}</td>
+                   <td>{{name}}</td>
+                   <td>{{surname}}</td>
+                   <td>{{email}}</td>
+                   <td>{{birthday}}</td>
+                   <td>{{address}}</td>
+                </tr>
+            {% endfor %}
+            </table>
+    </div>
+
+      </div>
+    </div>
+{% endblock %}

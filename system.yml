@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  test_sample_server:
+    image: test_sample_server:local
+    ports:
+    - "8080:8080"
+    command: script/run
+  test_sample_web_app:
+    image: test_sample_web_app:local
+    ports:
+    - "5000:5000"
+    command: script/run
+    environment:
+    - SERVER_HOST=test_sample_server
+    - SERVER_PORT=8080
+    depends_on:
+    - test_sample_server

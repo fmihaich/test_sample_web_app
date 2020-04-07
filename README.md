@@ -44,3 +44,47 @@ After finishing using the web app, to down de docker-compose environment execute
 ```bash
 docker-compose -f system.yml down
 ```
+
+## Run web app system tests
+
+### Pre-condition:
+
+Again, it is necessary to have a local image of the test sample server (See: [Pre-requisites](README.md/Pre-requisites))
+
+You will also need to have already built a ``test_runner`` image:
+- Test runner source: https://github.com/fmihaich/test_sample_test_runner
+
+Steps to build test runner image:
+
+```bash
+git clone https://github.com/fmihaich/test_sample_test_runner.git
+cd test_sample_test_runner
+docker build -f Dockerfile -t test_sample_test_runner:local .
+```
+
+### Steps to run the system tests:
+
+You can simply run ``script/system`` :)
+
+If you manually want to run or edit system tests, start the ``system_tests.yml`` docker-compose environment by running:
+
+```bash
+docker-compose -f system_tests.yml up &
+```
+
+After that, to run all defined system tests, execute:
+
+```bash
+docker-compose -f system_tests.yml exec test_sample_test_runner script/run
+```
+
+If you want to edit or add new system tests, then run the following command and work on your any editor locally:
+```bash
+docker-compose -f system_tests.yml exec test_sample_test_runner /bin/bash
+```
+
+After everything is done, down the docker-compose environment:
+
+```bash
+docker-compose -f system_tests.yml down -v
+```
